@@ -90,18 +90,18 @@ RankHospital <- function(state, outcome, num) {
     outcome.data.by.state[, 23] <- sapply(outcome.data.by.state[, 23], as.numeric)
     outcome.data.by.state <- filter(
       outcome.data.by.state, 
-      !is.na(Hospital.30.Day.Death..Mortality..Rates.from.Heart.Pneumonia)
+      !is.na(Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia)
     )
     ordered.by.pneumonia <- outcome.data.by.state[order(
       outcome.data.by.state$Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia,
       outcome.data.by.state$Hospital.Name
     ), ]
     if (num == 'best') {
-      return(ordered.by.pneumonia[1, ]$Hospital.Name)
-    }
-    if (num == 'worst') {
       return(head(ordered.by.pneumonia, n = 1)$Hospital.Name)
     }
-    return(tail(ordered.by.pneumonia, n = 1)$Hospital.Name)
+    if (num == 'worst') {
+      return(tail(ordered.by.pneumonia, n = 1)$Hospital.Name)
+    }
+    return(ordered.by.pneumonia[num, ]$Hospital.Name)
   }
 }
